@@ -1,7 +1,17 @@
-import InfraPage from "./features/infra/InfraPage";
-function App() {
-  return <>Nothing</>
-}
-export default App;
+// ============================================
+// Main App Component
+// ============================================
 
-//https://jsonplaceholder.typicode.com/posts/1
+import React from 'react';
+import { AppProviders } from '@/app/providers';
+import { AppRouter } from '@/routes';
+
+export const App: React.FC = () => {
+  return (
+    <AppProviders>
+      <AppRouter />
+    </AppProviders>
+  );
+};
+
+export default App;

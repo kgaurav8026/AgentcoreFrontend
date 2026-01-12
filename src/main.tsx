@@ -1,19 +1,27 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
+// ============================================
+// Application Entry Point
+// ============================================
 
-import { router } from "./app/router";
-import { AppProviders } from "./app/providers";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './styles/global.css';
 
-import "./styles/global.css";
+async function bootstrap() {
+  if (import.meta.env.DEV) {
+    // Start MSW in dev so the browser will return mocked API responses
+    const { worker } = await import('./mocks/browser');
+    await worker.start({
+      onUnhandledRequest: 'bypass', // Don't warn about unhandled requests
+    });
+  }
 
-ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-).render(
-  <React.StrictMode>
-    <AppProviders>
-      <RouterProvider router={router} />
-    </AppProviders>
-  </React.StrictMode>
-);
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+}
+
+bootstrap();
 
